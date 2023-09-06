@@ -36,8 +36,11 @@ float Q2(float *vet,int n){
 	if(n%2==0){
 		res=(vet[((3*n)/4)-(n/4)-1]+vet[((3*n)/4)-(n/4)])/2;
 	}
-	if(n%2!=0){
+	if(n%2!=0 && n!=5){
 		res=vet[((3*n)/4)-(n/4)-1];
+	}
+	if(n%2!=0 && n==5){
+		res=vet[((3*n)/4)-(n/4)];
 	}
 	return res;
 }

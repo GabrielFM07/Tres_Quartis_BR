@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout>
 	<Files>
-		<File Name="Tres_Quartis.c" Top="Yes" Tabpos="1" TopLine="70">
-			<Cursor Line="84" Column="33"/>
+		<File Name="Tres_Quartis.c" Top="Yes" Tabpos="1" TopLine="31">
+			<Cursor Line="44" Column="3"/>
 		</File>
 	</Files>
 </Layout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
 	<VersionInfo>
-		<VersionNumbers Major="1" Minor="1" Release="0" Build="0"/>
+		<VersionNumbers Major="1" Minor="2" Release="0" Build="0"/>
 		<LanguageID Value="1046"/>
 		<CharsetID Value="1252"/>
 		<CompanyName Value="Gabriel Fontenele"/>
-		<FileVersion Value="1.1.0.0"/>
+		<FileVersion Value="1.2.0.0"/>
 		<FileDescription Value="Application Console"/>
 		<InternalName Value=""/>
 		<LegalCopyright Value="Gabriel Fontenele"/>
@@ -17,7 +17,7 @@
 	</VersionInfo>
 	<Libs Value=""/>
 	<Flags Value=""/>
-	<Target Value="Tres Quartis v1.1.exe"/>
+	<Target Value="Tres Quartis v1.2.exe"/>
 	<CommandLine Value=""/>
 	<CompilerOptions Value="-Wall -s"/>
 	<DeleteObjectsBefore Value="Yes"/>
