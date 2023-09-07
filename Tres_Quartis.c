@@ -43,8 +43,7 @@ void OUTR(float *vet,float or,int n){
 float TRQR(int n){
 	float res;
 	res=n/4.0;
-	round(res);
-	return res;
+	return round(res);
 }
 float Q1(float *vet,int n){
 	float res;
@@ -129,7 +128,7 @@ int main()
 	}
 	
 	tq=TRQR(n);
-	v2= ORD(v,n);
+	v2=ORD(v,n);
 	q1=Q1(v2,n);
 	q2=Q2(v2,n);
 	q3=Q3(v2,n);
@@ -137,7 +136,7 @@ int main()
 	ol=q1-1.5*aiq;
 	or=q3+1.5*aiq;
 	
-	printf("\nOs quartis se encontram a uma distância de %.2f dados um do outro.\n",tq);
+	printf("\nOs quartis se encontram a uma distância aproximada de %.2f dados um do outro.\n",tq);
 	printf("O 1º quartil é: %.2f\n",q1);
 	printf("O 2º quartil é: %.2f\n",q2);
 	printf("O 3º quartil é: %.2f\n",q3);
@@ -147,8 +146,6 @@ int main()
 	OUTR(v,or,n);
 	printf("\nOBS: Caso nenhum valor seja informado é porque não há outliers.\n");
 	//MED(v,f,ol,or,n);
-	
-	system("PAUSE");
 	
 	return 0;
 }
