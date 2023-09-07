@@ -3,6 +3,25 @@
 #include <locale.h>
 #include <math.h>
 
+int ORD(float *vetor, int tamanho)
+{
+    int i, j;
+    float temp;
+    for ( i = 0; i < tamanho; i++)
+    {
+        for ( j = i; j < tamanho; j++)
+        {
+            if (vetor[i] > vetor[j])
+            {
+                temp = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = temp;
+             }
+        }
+	}
+	return vetor;
+}
+
 void OUTL(float *vet,float ol,int n){
 	int i;
 	printf("São outliers à esquerda:\n");
@@ -24,6 +43,7 @@ void OUTR(float *vet,float or,int n){
 float TRQR(int n){
 	float res;
 	res=n/4.0;
+	round(res);
 	return res;
 }
 float Q1(float *vet,int n){
@@ -54,7 +74,7 @@ float AIQ(float q1,float q3){
 	res=q3-q1;
 	return res;
 }
-void MED(float *vet,float *freq,float outl,float outr,int n){
+/*void MED(float *vet,float *freq,float outl,float outr,int n){
 	float res,reso,soma,somao,somaf;
 	int i;
 	soma=0;
@@ -75,18 +95,19 @@ void MED(float *vet,float *freq,float outl,float outr,int n){
 	}
 	reso=somao/somaf;
 	printf("A média do conjunto de dados analisados (contando com os outliers) é: %.2f\n",reso);
-}
+}*/
 
 int main()
 {
 	float aiq,q1,q2,q3,tq,ol,or;
 	int i,n;
 	float *v;
-	float *f;
+	//float *f;
+	float *v2;
 	
 	setlocale(LC_ALL,"Portuguese");
 	
-	printf("Esse programa analisará um conjunto de dados por meio dos Três Quartis e informará a média de uma distribuição de frequência.\n");
+	printf("Esse programa analisará um conjunto de dados por meio dos Três Quartis.\n");
 	do{
 		printf("Informe a quantidade de dados a ser analisada: ");
 		scanf("%d",&n);
@@ -96,33 +117,36 @@ int main()
 	}while(n<0);
 	
 	v = (float*)malloc(sizeof(int)*n);
-	f = (float*)malloc(sizeof(int)*n);
+	//f = (float*)malloc(sizeof(int)*n);
+	v2 = (float*)malloc(sizeof(int)*n);
 	
-	printf("Por favor, informe o valor dos dados EM ORDEM CRESCENTE, caso contrário os cálculos serão imprecisos.\n");
+	//printf("Por favor, informe o valor dos dados.\n");
 	for(i=0;i<n;i++){
 		printf("Informe o %dº dado: ",i+1);
 		scanf("%f",&v[i]);
-		printf("Informe a frequência em que o %dº dado aparece: ",i+1);
-		scanf("%f",&f[i]);
+		//printf("Informe a frequência em que o %dº dado aparece: ",i+1);
+		//scanf("%f",&f[i]);
 	}
 	
 	tq=TRQR(n);
-	q1=Q1(v,n);
-	q2=Q2(v,n);
-	q3=Q3(v,n);
+	v2= ORD(v,n);
+	q1=Q1(v2,n);
+	q2=Q2(v2,n);
+	q3=Q3(v2,n);
 	aiq=AIQ(q1,q3);
 	ol=q1-1.5*aiq;
 	or=q3+1.5*aiq;
 	
-	printf("\nOs quartis se encontram a uma distância de %.2f um do outro.\n",tq);	
+	printf("\nOs quartis se encontram a uma distância de %.2f dados um do outro.\n",tq);
 	printf("O 1º quartil é: %.2f\n",q1);
 	printf("O 2º quartil é: %.2f\n",q2);
 	printf("O 3º quartil é: %.2f\n",q3);
+	printf("O valor da amplitude interquartil é: %2.f\n", aiq);
 	OUTL(v,ol,n);
 	printf("\n");
 	OUTR(v,or,n);
 	printf("\nOBS: Caso nenhum valor seja informado é porque não há outliers.\n");
-	MED(v,f,ol,or,n);
+	//MED(v,f,ol,or,n);
 	
 	system("PAUSE");
 	
