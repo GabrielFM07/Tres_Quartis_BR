@@ -147,5 +147,7 @@ int main()
 	printf("\nOBS: Caso nenhum valor seja informado é porque não há outliers.\n");
 	//MED(v,f,ol,or,n);
 	
+	system("PAUSE");
+	
 	return 0;
 }
