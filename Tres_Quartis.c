@@ -42,6 +42,7 @@ float* ORD(float *vetor, int tamanho){
              }
         }
 	}
+	printf("Reordenando os dados em ordem crescente...\nDados reordenados.\n");
 	return vetor;
 }
 void OUTL(float *vet,float ol,int n){
@@ -157,24 +158,30 @@ void DF(float *vet,float *pes,int n){
 	fi=0,Fri=0;
 	for(i=0;i<n;i++){
 		fi+=pes[i];
+		printf("| O valor do %dº dado é: %.2f |",i+1,vet[i]);
+		printf(" A freq. absoluta do %dº dado é: %.2f |",i+1,pes[i]);
+		if((i+1)!=n){
+			printf("\n");
+		}
 	}
+	printf("\n");
 	for(i=0;i<n;i++){
 		fr=0;
 		fr+=(pes[i]/fi)*100;
-		printf("A frequência relativa do %dº dado é de %.2f%%\n",i+1,fr);
+		printf("A freq. relativa do %dº dado é de %.2f%%\n",i+1,fr);
 	}
 	for(i=0;i<n;i++){
 		Fri+=(pes[i]/fi)*100;
-		printf("A frequência relativa acumulada do %dº dado é de %.2f%%\n",i+1,Fri);
+		printf("A freq. relativa acumulada do %dº dado é de %.2f%%\n",i+1,Fri);
 	}
-	printf("A frequência absoluta do conjunto de dados analisado é: %.2f\n",fi);
+	printf("A freq. absoluta de todo o conjunto de dados analisado é: %.2f\n",fi);
 	
 }
 
 int main()
 {
 	float aiq,q1,q2,q3,tq,ol,or;
-	int i,n,esc,esc2;
+	int i,n,esc,esc2,esc3;
 	float *v,*v2;
 	float *p;
 	float *p2;
@@ -287,10 +294,19 @@ int main()
 				printf("Informe a frequência em que o %dº dado aparece: ",i+1);
 				scanf("%f",&p[i]);
 			}
-			v2=ORD(v,n);
-			p2=ORDP(v,p,n);
 			do{
-				printf("Você deseja limpar a tela antes de receber os resultados?\n(1-Sim  /  2-Não)\n");
+				printf("Você deseja reordenar os dados informados em ordem crescente?(Opcional)\n(1-Sim  /  2-Não)\n");
+				scanf("%d",&esc3);
+				if(esc3==1){
+					v2=ORD(v,n);
+					p2=ORDP(v,p,n);
+				}
+				if(esc3==2){
+					break;
+				}
+			}while(esc3<1 || esc3>2);
+			do{
+				printf("Você deseja limpar a tela antes de receber os resultados?(Recomendado)\n(1-Sim  /  2-Não)\n");
 				scanf("%d",&esc2);
 				if(esc2==1){
 					system("CLS");
@@ -303,7 +319,12 @@ int main()
 					continue;
 				}
 			}while(esc2 !=1 && esc2 !=2);
-			DF(v2,p2,n);
+			if(esc3==1){
+				DF(v2,p2,n);
+			}
+			if(esc3==2){
+				DF(v,p,n);
+			}
 			
 			system("PAUSE");
 			continue;
