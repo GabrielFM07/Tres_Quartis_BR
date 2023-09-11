@@ -17,7 +17,7 @@
 	</VersionInfo>
 	<Libs Value=""/>
 	<Flags Value=""/>
-	<Target Value="Tres Quartis v2.0_beta.exe"/>
+	<Target Value="Tres Quartis v2.0.exe"/>
 	<CommandLine Value=""/>
 	<CompilerOptions Value="-Wall -s"/>
 	<DeleteObjectsBefore Value="Yes"/>
