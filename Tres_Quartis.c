@@ -28,40 +28,70 @@ float* ORDP(float *vetor,float *peso,int n){
 	return peso;
 }
 float* ORD(float *vetor, int tamanho){
-    int i, j;
+    int i,j,cont;
     float temp;
-    for ( i = 0; i < tamanho; i++)
-    {
-        for ( j = i; j < tamanho; j++)
-        {
-            if (vetor[i] > vetor[j])
-            {
-                temp = vetor[i];
+    cont=0;
+    for(i=0;i<tamanho;i++){
+        for(j=i;j<tamanho;j++){
+            if (vetor[i] > vetor[j]){
+            	temp = vetor[i];
                 vetor[i] = vetor[j];
                 vetor[j] = temp;
+                cont++;
              }
         }
 	}
-	printf("Reordenando os dados em ordem crescente...\nDados reordenados.\n");
+	printf("Checando se os dados estão em ordem crescente...\n");
+	if(cont>0){
+		printf("Não estão, reordenando...\n");
+		printf("Dados reordenados.\n");
+	}
+	else{
+		printf("Estão, não foi necessário reordenar.\n");
+	}
 	return vetor;
 }
 void OUTL(float *vet,float ol,int n){
-	int i;
-	printf("São outliers à esquerda:\n");
+	int i,cont;
+	cont=0;
 	for(i=0;i<n;i++){
 		if(vet[i]<ol){
-			printf("<%.2f>",vet[i]);
+			cont++;
 		}
 	}
+	if(cont>0){
+		printf("São outliers à esquerda:\n");
+		for(i=0;i<n;i++){
+			if(vet[i]<ol){
+				printf("<%.2f>",vet[i]);
+			}
+		}
+	}
+	else{
+		printf("Não há outliers à esquerda.\n");
+	}
+	
 }
 void OUTR(float *vet,float or,int n){
-	int i;
-	printf("São outliers à direita:\n");
+	int i,cont;
+	cont=0;
 	for(i=0;i<n;i++){
 		if(vet[i]>or){
-			printf("<%.2f>",vet[i]);
+			cont++;
 		}
 	}
+	if(cont>0){
+		printf("São outliers à direita:\n");
+		for(i=0;i<n;i++){
+			if(vet[i]>or){
+				printf("<%.2f>",vet[i]);
+			}
+		}
+	}
+	else{
+		printf("Não há outliers à direita.\n");
+	}
+	
 }
 float TRQR(int n){
 	float res;
@@ -118,7 +148,13 @@ void MEDA(float *vet,int n){
 	else{
 		mdn=vet[n/2];
 	}
-	printf("A média aritmética do conjunto de dados analisado é: %.2f\nA mediana do conjunto de dados é: %.2f\nA moda do conjunto de dados é: %.2f\n",res,mdn,mde);
+	printf("A média aritmética do conjunto de dados analisado é: %.2f\nA mediana do conjunto de dados é: %.2f\n",res,mdn);
+	if(val>1){
+		printf("A moda do conjunto de dados é: %.2f\n",mde);
+	}
+	if(val<=1){
+		printf("Não há moda nesse conjunto de dados.\n");
+	}
 }
 void MEDP(float *vet,float *pes,int n){
 	float res,soma,somap;
@@ -183,8 +219,7 @@ int main()
 	float aiq,q1,q2,q3,tq,ol,or;
 	int i,n,esc,esc2,esc3;
 	float *v,*v2;
-	float *p;
-	float *p2;
+	float *p,*p2;
 	
 	setlocale(LC_ALL,"Portuguese");
 	do{
@@ -222,9 +257,7 @@ int main()
 			printf("O 3º quartil é: %.2f\n",q3);
 			printf("O valor da amplitude interquartil é: %2.f\n", aiq);
 			OUTL(v,ol,n);
-			printf("\n");
 			OUTR(v,or,n);
-			printf("\nOBS: Caso nenhum valor seja informado é porque não há outliers.\n");
 			system("PAUSE");
 			continue;
 		}
@@ -312,14 +345,14 @@ int main()
 				if(esc2==1){
 					system("CLS");
 				}
-				if(esc2==1){
+				if(esc2==2){
 					continue;
 				}
 				else{
 					printf("Valor inválido, por favor digite um valor entre 1 e 2.\n");
 					continue;
 				}
-			}while(esc2 !=1 && esc2 !=2);
+			}while(esc2<1 || esc2>2);
 			if(esc3==1){
 				DF(v2,p2,n);
 			}
@@ -353,7 +386,6 @@ int main()
 		}
 		if(esc==6){
 			printf("\t\t\t\tSaindo...\n");
-			exit(0);
 		}
 		if(esc<1 || esc>6){
 			printf("Valor inválido, por favor digite um valor entre 1 e 6.\n");

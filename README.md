@@ -9,3 +9,4 @@ Changelog:
 2.0.0: Melhorias na interface gráfica, melhorias/simplificações de sintaxe ao longo de todo o código, implementação das funções de Variância & Desvio Padrão e Distribuição de Frequência.
 2.1.0: A função de Distribuição de Frequência perguntará se o usuário deseja reordenar os valores, além disso, os valores e a frequência dos mesmos serão apresentados após a limpeza de tela.
 2.2.0: Pequena otimização do código;
+2.3.0: Implementação de um condicional que detecta se há ou não há moda na função de Média Populacional & Amostral, implementação de um condicional que informa se houve necessidade de reodenação ao utilizar a função de Três Quartis e um texto que anteriormente era omitido ao rodar o programa por meio do executável agora aparecerá como planejado;
