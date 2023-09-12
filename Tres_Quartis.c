@@ -200,6 +200,7 @@ int main()
 					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
 				}
 			}while(n<0);
+			
 			v = (float*)malloc(sizeof(int)*n);
 			v2 = (float*)malloc(sizeof(int)*n);
 			
