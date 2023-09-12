@@ -284,9 +284,7 @@ int main()
 			}while(n<0);
 	
 			v = (float*)malloc(sizeof(int)*n);
-			v2 = (float*)malloc(sizeof(int)*n);
 			p = (float*)malloc(sizeof(int)*n);
-			p2 = (float*)malloc(sizeof(int)*n);
 	
 			for(i=0;i<n;i++){
 				printf("Informe o %dº dado: ",i+1);
@@ -298,6 +296,8 @@ int main()
 				printf("Você deseja reordenar os dados informados em ordem crescente?(Opcional)\n(1-Sim  /  2-Não)\n");
 				scanf("%d",&esc3);
 				if(esc3==1){
+					v2 = (float*)malloc(sizeof(int)*n);
+					p2 = (float*)malloc(sizeof(int)*n);
 					v2=ORD(v,n);
 					p2=ORDP(v,p,n);
 				}
