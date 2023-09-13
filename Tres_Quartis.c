@@ -6,7 +6,7 @@
 int menu(){
 	int esc;
 	
-	printf("\tInforme qual função do programa você deseja utilizar:\n ___________________________________________________________________\n|\t\t\t\t\t\t\t\t    |\n");
+	printf("\tDigite qual função do programa você deseja utilizar:\n ___________________________________________________________________\n|\t\t\t\t\t\t\t\t    |\n");
 	printf("| 1-<Três Quartis>\t\t 2-<Média Populacional ou Amostral> |\n|\t\t\t\t\t\t\t\t    |\n| 3-<Média Ponderada>\t\t     4-<Distribuição de Frequência> |\n");
 	printf("|\t\t\t\t\t\t\t\t    |\n| 5-<Variância e Desvio Padrão>\t\t\t\t   6-<Sair> |\n|___________________________________________________________________|\n");
 	scanf("%d",&esc);
@@ -211,13 +211,48 @@ void DF(float *vet,float *pes,int n){
 		printf("A freq. relativa acumulada do %dº dado é de %.2f%%\n",i+1,Fri);
 	}
 	printf("A freq. absoluta de todo o conjunto de dados analisado é: %.2f\n",fi);
-	
+}
+float AC(float *vet,int n,int cla){
+	float res;
+	printf("O limite inferior do conjunto de dados analisado é: %.2f\nO limite superior do conjunto de dados analisado é: %.2f\n",vet[0],vet[n-1]);
+	res=(vet[n-1]-vet[0])/cla;
+	return res;
+}
+void PM(float *vet,int n,int c){
+	int i,*freq;
+	float *li,*ls,*res,freq1,freq2;
+	li = (float*)malloc(sizeof(int)*c);
+	ls = (float*)malloc(sizeof(int)*c);
+	res = (float*)malloc(sizeof(int)*c);
+	freq = (int*)malloc(sizeof(int)*c);
+	freq1=0;
+	for(i=0;i<c;i++){
+		printf("Qual o limite inferior da %dª classe? ",i+1);
+		scanf("%f",&li[i]);
+		printf("Qual o limite superior da %dª classe? ",i+1);
+		scanf("%f",&ls[i]);
+		res[i]=(li[i]+ls[i])/2;
+		printf("Qual a frequência em que os valores da %dª classe aparecem? ",i+1);
+		scanf("%d",&freq[i]);
+		freq1+=freq[i];
+	}
+	freq2=0;
+	for(i=0;i<c;i++){
+		printf("O ponto médio da %dª classe é: %.2f\n",i+1,res[i]);
+	}
+	for(i=0;i<c;i++){
+		printf("A frequência relativa da %dª classe é de %.2f%%\n",i+1,(freq[i]/freq1)*100.0);
+	}
+	for(i=0;i<c;i++){
+		freq2+=(freq[i]/freq1)*100;
+		printf("A frequência acumulada da %dª classe é de %.2f%%\n",i+1,freq2);
+	}
 }
 
 int main()
 {
-	float aiq,q1,q2,q3,tq,ol,or;
-	int i,n,esc,esc2,esc3;
+	float aiq,q1,q2,q3,tq,ol,or,ac;
+	int i,n,c,esc,esc2,esc3,esc4,esc5;
 	float *v,*v2;
 	float *p,*p2;
 	
@@ -229,10 +264,10 @@ int main()
 			system("CLS");
 			printf("\nEsse programa analisará um conjunto de dados por meio dos Três Quartis.\n");
 			do{
-				printf("Informe a quantidade de dados a ser analisada: ");
+				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
 				if(n<0){
-					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
+					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
 				}
 			}while(n<0);
 			
@@ -240,7 +275,7 @@ int main()
 			v2 = (float*)malloc(sizeof(int)*n);
 			
 			for(i=0;i<n;i++){
-				printf("Informe o %dº dado: ",i+1);
+				printf("Digite o %dº dado: ",i+1);
 				scanf("%f",&v[i]);
 			}
 			tq=TRQR(n);
@@ -265,17 +300,17 @@ int main()
 			system("CLS");
 			printf("\nEsse programa analisará um conjunto de dados e informará a média aritimética deles.\n");
 			do{
-				printf("Informe a quantidade de dados a ser analisada: ");
+				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
 				if(n<0){
-					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
+					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
 				}
 			}while(n<0);
 			
 			v = (float*)malloc(sizeof(int)*n);
 			
 			for(i=0;i<n;i++){
-				printf("Informe o %dº dado: ",i+1);
+				printf("Digite o %dº dado: ",i+1);
 				scanf("%f",&v[i]);
 			}
 			MEDA(v,n);
@@ -286,10 +321,10 @@ int main()
 			system("CLS");
 			printf("Esse programa analisará um conjunto de dados e informará a média ponderada deles.\n");
 			do{
-				printf("Informe a quantidade de dados a ser analisada: ");
+				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
 				if(n<0){
-					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
+					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
 				}
 			}while(n<0);
 	
@@ -297,9 +332,9 @@ int main()
 			p = (float*)malloc(sizeof(int)*n);
 	
 			for(i=0;i<n;i++){
-				printf("Informe o %dº dado: ",i+1);
+				printf("Digite o %dº dado: ",i+1);
 				scanf("%f",&v[i]);
-				printf("Informe o peso do %dº dado: ",i+1);
+				printf("Digite o peso do %dº dado: ",i+1);
 				scanf("%f",&p[i]);
 			}
 			MEDP(v,p,n);
@@ -308,58 +343,112 @@ int main()
 		}
 		if(esc==4){
 			system("CLS");
-			printf("Esse programa analisará um conjunto de dados e realizará uma distribuição de frequência no mesmo.\n");
 			do{
-				printf("Informe a quantidade de dados a ser analisada: ");
-				scanf("%d",&n);
-				if(n<0){
-					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
-				}
-			}while(n<0);
-	
-			v = (float*)malloc(sizeof(int)*n);
-			p = (float*)malloc(sizeof(int)*n);
-	
-			for(i=0;i<n;i++){
-				printf("Informe o %dº dado: ",i+1);
-				scanf("%f",&v[i]);
-				printf("Informe a frequência em que o %dº dado aparece: ",i+1);
-				scanf("%f",&p[i]);
-			}
-			do{
-				printf("Você deseja reordenar os dados informados em ordem crescente?(Opcional)\n(1-Sim  /  2-Não)\n");
+				printf("O que deseja calcular?\n(1-Amplitude de Classes  /  2-Frequência Absoluta, Relativa e Acumulada)\n");
 				scanf("%d",&esc3);
-				if(esc3==1){
-					v2 = (float*)malloc(sizeof(int)*n);
-					p2 = (float*)malloc(sizeof(int)*n);
-					v2=ORD(v,n);
-					p2=ORDP(v,p,n);
-				}
-				if(esc3==2){
-					break;
-				}
-			}while(esc3<1 || esc3>2);
-			do{
-				printf("Você deseja limpar a tela antes de receber os resultados?(Recomendado)\n(1-Sim  /  2-Não)\n");
-				scanf("%d",&esc2);
-				if(esc2==1){
-					system("CLS");
-				}
-				if(esc2==2){
-					continue;
-				}
-				else{
+				if(esc3<1 || esc3>2){
 					printf("Valor inválido, por favor digite um valor entre 1 e 2.\n");
 					continue;
 				}
-			}while(esc2<1 || esc2>2);
+				else{
+					system("CLS");
+				}
+			}while(esc3<1 || esc3>2);
 			if(esc3==1){
-				DF(v2,p2,n);
+				printf("Esse programa analisará um conjunto de dados e buscará a amplitude de classes do mesmo.\n");
+				printf("Digite a quantidade de dados que serão analisados: ");
+				scanf("%d",&n);
+				printf("Digite quantas classes deseja utilizar: ");
+				scanf("%d",&c);
+				if(n<0){
+					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
+				}
+				
+				v = (float*)malloc(sizeof(int)*n);
+				v2 = (float*)malloc(sizeof(int)*n);
+				
+				for(i=0;i<n;i++){
+					printf("Digite o %dº dado: ",i+1);
+					scanf("%f",&v[i]);
+				}
+				
+				v2=ORD(v,n);
+				printf("\n");
+				ac=AC(v2,n,c);
+				
+				printf("A amplitude de classes do conjunto de dados analisado é de: %.2f\n",ac);
+				do{
+					printf("\nVocê deseja calcular o ponto médio desses dados?(1-Sim  /  2-Não)\nEm caso afirmativo, monte sua tabela utilizando os resultados obtidos até aqui antes de prosseguir.\n(Futuramente a tabela será fornecida pela própria função)\n");
+					scanf("%d",&esc4);
+					do{
+						printf("Você deseja limpar a tela antes de receber os resultados?(Recomendado)\n(1-Sim  /  2-Não)\n");
+						scanf("%d",&esc5);
+						if(esc5==1){
+							system("CLS");
+						}
+						if(esc5==2){
+							continue;
+						}
+						else{
+							printf("Valor inválido, por favor digite um valor entre 1 e 2.\n");
+							continue;
+						}
+					}while(esc5<1 || esc5>2);
+					if(esc4==1){
+						PM(v2,n,c);
+					}
+					if(esc4==2){
+						break;
+					}
+					else{
+						printf("Valor inválido, por favor digite um valor entre 1 e 2.\n");
+						continue;
+					}
+				}while(esc4<1 || esc4>2);
+				
 			}
 			if(esc3==2){
-				DF(v,p,n);
+				printf("Esse programa analisará um conjunto de dados e realizará uma distribuição de frequência no mesmo.\n");
+				do{
+					printf("Digite a quantidade de classes que serão analisadas: ");
+					scanf("%d",&n);
+					if(n<0){
+						printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
+					}
+				}while(n<0);
+				
+				v = (float*)malloc(sizeof(int)*n);
+				p = (float*)malloc(sizeof(int)*n);
+				
+				for(i=0;i<n;i++){
+					printf("Digite o %dº dado: ",i+1);
+					scanf("%f",&v[i]);
+					printf("Digite a frequência em que o %dº dado aparece: ",i+1);
+					scanf("%f",&p[i]);
+				}
+				
+				v2 = (float*)malloc(sizeof(int)*n);
+				p2 = (float*)malloc(sizeof(int)*n);
+				v2=ORD(v,n);
+				p2=ORDP(v,p,n);
+				
+				do{
+					printf("Você deseja limpar a tela antes de receber os resultados?(Recomendado)\n(1-Sim  /  2-Não)\n");
+					scanf("%d",&esc2);
+					if(esc2==1){
+						system("CLS");
+					}
+					if(esc2==2){
+						continue;
+					}
+					else{
+						printf("Valor inválido, por favor digite um valor entre 1 e 2.\n");
+						continue;
+					}
+				}while(esc2<1 || esc2>2);
+				
+				DF(v2,p2,n);
 			}
-			
 			system("PAUSE");
 			continue;
 		}
@@ -367,17 +456,17 @@ int main()
 			system("CLS");
 			printf("Esse programa analisará um conjunto de dados e informará a média, variância e desvio padrão deles.\n");
 			do{
-				printf("Informe a quantidade de dados a ser analisada: ");
+				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
 				if(n<0){
-					printf("A quantidade informada é inválida, por favor digite um valor maior que 0.\n");
+					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
 				}
 			}while(n<0);
 			
 			v = (float*)malloc(sizeof(int)*n);
 			
 			for(i=0;i<n;i++){
-				printf("Informe o %dº dado: ",i+1);
+				printf("Digite o %dº dado: ",i+1);
 				scanf("%f",&v[i]);
 			}
 			VDP(v,n);
