@@ -6,9 +6,29 @@
 int menu(){
 	int esc;
 	
-	printf("\tDigite qual função do programa você deseja utilizar:\n ___________________________________________________________________\n|\t\t\t\t\t\t\t\t    |\n");
-	printf("| 1-<Três Quartis>\t\t 2-<Média Populacional ou Amostral> |\n|\t\t\t\t\t\t\t\t    |\n| 3-<Média Ponderada>\t\t     4-<Distribuição de Frequência> |\n");
-	printf("|\t\t\t\t\t\t\t\t    |\n| 5-<Variância e Desvio Padrão>\t\t\t\t   6-<Sair> |\n|___________________________________________________________________|\n");
+	printf(" ___________________________________________________________________\n");
+	printf("|\t\t\t\t\t\t\t\t    |\n");
+	printf("| 1-<Três Quartis>\t\t 2-<Média Populacional ou Amostral> |\n");
+	printf("|\t\t\t\t\t\t\t\t    |\n");
+	printf("| 3-<Média Ponderada>\t\t     4-<Distribuição de Frequência> |\n");
+	printf("|\t\t\t\t\t\t\t\t    |\n");
+	printf("| 5-<Variância e Desvio Padrão>\t\t\t\t   6-<Sair> |\n");
+	printf("|___________________________________________________________________|\n");
+	printf("\nDigite qual função do programa você deseja utilizar: ");
+	scanf("%d",&esc);
+	
+	return esc;
+}
+int menuDF(){
+	int esc;
+	
+	printf(" ________________________________________________________________________________\n");
+	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+	printf("| 1-Amplitude de Classes, Ponto Médio e Frequências de um conjunto desorganizado |\n");
+	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+	printf("|     2- Frequência Absoluta, Relativa e Acumulada de um conjunto organizado     |\n");
+	printf("|________________________________________________________________________________|\n");
+	printf("\nO que deseja calcular? ");
 	scanf("%d",&esc);
 	
 	return esc;
@@ -208,25 +228,13 @@ void DF(float *vet,float *pes,int n){
 	printf("A freq. absoluta de todo o conjunto de dados analisado é: %.2f\n",fi);
 }
 float AC(float *vet,int n,int cla){
-	int esc;
-	float res;
+	float res,res2;
 	printf("O limite inferior do conjunto de dados analisado é: %.2f\nO limite superior do conjunto de dados analisado é: %.2f\n",vet[0],vet[n-1]);
-	res=(vet[n-1]-vet[0])/cla;
-	printf("A amplitude de classes do conjunto de dados analisado é: %.2f\n",res);
-	do{
-		printf("Você deseja arredondar esse valor?\n(1-Para cima  /  2-Para baixo)\n");
-		scanf("%d",&esc);
-		if(esc==1){
-			return ceil(res);
-		}
-		if(esc==2){
-			return floor(res);
-		}
-		else{
-			printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
-			continue;
-		}
-	}while(esc<1 || esc>2);
+	res2=(vet[n-1]-vet[0])/cla;
+	printf("A amplitude de classes do conjunto de dados analisado é: %.2f\n",res2);
+	res=floor(res2);
+	
+	return res;
 }
 void PM(float *vet,float ac,int n,int c){
 	int i,j,cont,*freq;
@@ -237,6 +245,10 @@ void PM(float *vet,float ac,int n,int c){
 	res = (float*)malloc(sizeof(int)*c);
 	freq = (int*)malloc(sizeof(int)*c);
 	
+	printf(" _______________________________________________________\n");
+	printf("|                                                       |\n");
+	printf("| Arredondando a amplitude de classe para baixo, temos: |\n");
+	printf("|_______________________________________________________|\n\n");
 	freq1=0;
 	for(i=0;i<c;i++){
 		cont=0;
@@ -246,14 +258,57 @@ void PM(float *vet,float ac,int n,int c){
 		else{
 			li[i]=li[i-1]+ac;
 		}
-		printf("O limite inferior da %dª classe é: %.2f",i+1,li[i]);
+		printf("O limite inferior da %dª classe é: %.1f",i+1,li[i]);
 		if(i==0){
 			ls[i]=li[i]+ac-1;
 		}
 		else{
 			ls[i]=ls[i-1]+ac;
 		}
-		printf("\t|\tO limite superior da %dª classe é: %.2f\n",i+1,ls[i]);
+		printf("\t|\tO limite superior da %dª classe é: %.1f\n",i+1,ls[i]);
+		
+		res[i]=(li[i]+ls[i])/2;
+		printf("O ponto médio da %dª classe é: %.2f",i+1,res[i]);
+		for(j=0;j<n;j++){
+			if(vet[j]>=li[i] && vet[j]<=ls[i]){
+				cont++;
+			}
+		}
+		freq[i]=cont;
+		printf("\t|\tA frequência dos valores contidos na %dª classe é: %d\n\n",i+1,freq[i]);
+		freq1+=freq[i];
+	}
+	freq2=0;
+	for(i=0;i<c;i++){
+		printf("A frequência relativa da %dª classe é de %.2f%%\n",i+1,(freq[i]/freq1)*100.0);
+	}
+	for(i=0;i<c;i++){
+		freq2+=(freq[i]/freq1)*100;
+		printf("A frequência acumulada da %dª classe é de %.2f%%\n",i+1,freq2);
+	}
+	
+	printf("\n ______________________________________________________\n");
+	printf("|                                                      |\n");
+	printf("| Arredondando a amplitude de classe para cima, temos: |\n");
+	printf("|______________________________________________________|\n\n");
+	freq1=0;
+	ac+=1;
+	for(i=0;i<c;i++){
+		cont=0;
+		if(i==0){
+			li[i]=vet[i];
+		}
+		else{
+			li[i]=li[i-1]+ac;
+		}
+		printf("O limite inferior da %dª classe é: %.1f",i+1,li[i]);
+		if(i==0){
+			ls[i]=li[i]+ac-1;
+		}
+		else{
+			ls[i]=ls[i-1]+ac;
+		}
+		printf("\t|\tO limite superior da %dª classe é: %.1f\n",i+1,ls[i]);
 		
 		res[i]=(li[i]+ls[i])/2;
 		printf("O ponto médio da %dª classe é: %.2f",i+1,res[i]);
@@ -371,8 +426,7 @@ int main()
 		if(esc==4){
 			system("CLS");
 			do{
-				printf("O que deseja calcular?\n(1-Amplitude de Classes  /  2-Frequência Absoluta, Relativa e Acumulada)\n");
-				scanf("%d",&esc3);
+				esc3=menuDF();
 				if(esc3<1 || esc3>2){
 					printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 					continue;
@@ -422,7 +476,7 @@ int main()
 						if(esc5==2){
 							continue;
 						}
-						else{
+						if(esc5<1 || esc5>2){
 							printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 							continue;
 						}
