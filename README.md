@@ -1,5 +1,4 @@
 # Tres_Quartis_BR
- 
 Changelog:
 1.0.0: Versão de lançamento;
 1.1.0: Pequenas melhorias no código;
