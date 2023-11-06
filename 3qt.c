@@ -358,15 +358,27 @@ void PM(float *vet,float ac,int n,int c){
 void IDCC(int n){
 	float x,e,zc,dp,c,soma=0,n1;
 	float* vet;
-	int i,n2;
+	int i,n2,esc1,esc2;
 	if(n==0)
 		printf("Esse programa analisará um conjunto de dados e retornará a sua quantidade de membros.\n");
 	if(n!=0){
 		printf("Esse programa analisará um conjunto de dados e retornará o intervalo de confiança do mesmo.\n");
-		vet = (float*)malloc(sizeof(int)*n);
-		for(i=0;i<n;i++){
-			printf("Digite o %dº dado: ",i+1);
-				scanf("%f",&vet[i]);
+		do{
+			printf("Você já sabe o valor da média desse conjunto de dados(1-Sim / 2-Não)? ");
+			scanf("%d",&esc1);
+			if(esc1<1 || esc1>2)
+				printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
+		}while(esc1<1 || esc1>2);
+		if(esc1==2){
+			printf("Deseja digitar os valores do conjunto ou somente busca pelo erro amostral(1-Digitar / 2-Erro amostral)? ");
+			scanf("%d",&esc2);
+			if(esc2==1){
+				vet = (float*)malloc(sizeof(int)*n);
+				for(i=0;i<n;i++){
+					printf("Digite o %dº dado: ",i+1);
+					scanf("%f",&vet[i]);
+				}
+			}
 		}
 	}
 	
@@ -376,15 +388,23 @@ void IDCC(int n){
 	do{
 		printf("Qual o nível de confiança para o intervalo desse conjunto de dados(90%%, 95%% ou 99%% - Digite sem a %%)? ");
 		scanf("%f",&c);
-		if(c<80.0 || c>99.9)
-			printf("<Valor de 'c' inválido, favor digitar um valor entre 80%% e 99.9%%>\n");
-	}while(c<80.0 || c>99.9);
+		if(c<75.0 || c>99.9)
+			printf("<Valor de 'c' inválido, favor digitar um valor entre 75%% e 99.9%%>\n");
+	}while(c<75.0 || c>99.9);
+	if(c==75)
+		zc=1.15;
 	if(c==80)
 		zc=1.28;
+	if(c==85)
+		zc=1.44;
 	if(c==90)
 		zc=1.645;
 	if(c==95)
 		zc=1.96;
+	if(c==97)
+		zc=2.17;
+	if(c==97.5)
+		zc=2.242;
 	if(c==98)
 		zc=2.33;
 	if(c==99)
@@ -404,15 +424,26 @@ void IDCC(int n){
 	else
 		e=zc*dp/sqrtf(n);
 	
-	for(i=0;i<n;i++){
-		soma+=vet[i];
+	if(esc1==1){
+		printf("Qual o valor da média amostral desse conjunto de dados? ");
+		scanf("%f",&x);
 	}
-	x=soma/n;
+	if(esc1==2){
+		for(i=0;i<n;i++){
+			soma+=vet[i];
+		}
+		x=soma/n;
+	}
 	
-	if(n!=0)
+	if(n!=0 && esc2!=2){
+		printf("Sabendo que c é igual a '%.1f', z-crítico é igual a '%.3f' e o desvio padrão é igual a: '%f', temos que:\n",c,zc,dp);
 		printf("O intervalo de confiança desse conjunto de dados se encontra entre '%f' e %f', com uma média de '%f'.\n",x-e,x+e,x);
-	else
+	}
+	if(n==0)
 		printf("A estimativa pontual da média populacional é de '%f'.\n",x);
+	
+	if(esc2==2)
+		printf("O erro amostral é: '%f'\n",e);
 }
 void IDCD(){//à ser implementada no futuro.
 	printf("Função ainda em desenvolvimento.\n");
