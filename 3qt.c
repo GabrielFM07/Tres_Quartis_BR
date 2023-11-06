@@ -7,12 +7,14 @@ int menu(){
 	int esc;
 	
 	printf(" ___________________________________________________________________\n");
-	printf("|\t\t\t\t\t\t\t\t    |\n");
-	printf("| 1-<Três Quartis>\t\t 2-<Média Populacional ou Amostral> |\n");
-	printf("|\t\t\t\t\t\t\t\t    |\n");
-	printf("| 3-<Média Ponderada>\t\t     4-<Distribuição de Frequência> |\n");
-	printf("|\t\t\t\t\t\t\t\t    |\n");
-	printf("| 5-<Variância e Desvio Padrão>\t\t\t\t   6-<Sair> |\n");
+	printf("|                                                                   |\n");
+	printf("| 1-<Três Quartis>               2-<Média Populacional ou Amostral> |\n");
+	printf("|                                                                   |\n");
+	printf("| 3-<Média Ponderada>                4-<Distribuição de Frequência> |\n");
+	printf("|                                                                   |\n");
+	printf("| 5-<Variância e Desvio Padrão>         6-<Intervalos de Confiança> |\n");
+	printf("|                                                                   |\n");
+	printf("| 7-<Sair>                                                          |\n");
 	printf("|___________________________________________________________________|\n");
 	printf("\nDigite qual função do programa você deseja utilizar: ");
 	scanf("%d",&esc);
@@ -27,6 +29,20 @@ int menuDF(){
 	printf("| 1-Amplitude de Classes, Ponto Médio e Frequências de um conjunto desorganizado |\n");
 	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
 	printf("|     2- Frequência Absoluta, Relativa e Acumulada de um conjunto organizado     |\n");
+	printf("|________________________________________________________________________________|\n");
+	printf("\nO que deseja calcular? ");
+	scanf("%d",&esc);
+	
+	return esc;
+}
+int menuIDC(){
+	int esc;
+	
+	printf(" ________________________________________________________________________________\n");
+	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+	printf("|             1-<Intervalo de confiança com desvio padrão conhecido>             |\n");
+	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+	printf("| 2-<Intervalo de Confiança com desvio padrão desconhecido (à ser implementado)> |\n");
 	printf("|________________________________________________________________________________|\n");
 	printf("\nO que deseja calcular? ");
 	scanf("%d",&esc);
@@ -192,36 +208,28 @@ void MEDP(float *vet,float *pes,int n){
 	printf("A média ponderada do conjunto de dados analisado é: %.2f\n",res);
 }
 void VDP(float *vet,int n){
-	float med1,med2,var,var2,soma1,soma2,soma3;
+	float med,var,var2,soma1,soma2;
 	int i;
 	soma1=0;
 	soma2=0;
-	soma3=0;
 	for(i=0;i<n;i++){
 		soma1+=vet[i];
 	}
-	med1=soma1/n;
-	med2=soma1/(n-1);
+	med=soma1/n;
 	for(i=0;i<n;i++){
-		if(vet[i]>med1){
-			soma2+=(vet[i]-med1)*(vet[i]-med1);
+		if(vet[i]>med){
+			soma2+=(vet[i]-med)*(vet[i]-med);
 		}
-		if(vet[i]>med2){
-			soma3+=(vet[i]-med2)*(vet[i]-med2);
-		}
-		if(vet[i]<med1){
-			soma2+=(med1-vet[i])*(med1-vet[i]);
-		}
-		if(vet[i]<med2){
-			soma3+=(med2-vet[i])*(med2-vet[i]);
+		if(vet[i]<med){
+			soma2+=(med-vet[i])*(med-vet[i]);
 		}
 	}
 	var=soma2/n;
-	var2=soma3/n;
+	var2=soma2/(n-1);
 	printf("Caso o conjunto seja populacional, os resultados são os seguintes:\n");
-	printf("A média aritmética do conjunto de dados analisado é: %.2f\nA variância do conjunto de dados analisado é: %.2f\nO desvio padrão do conjunto de dados analisado é: %.2f\n",med1,var,sqrtf(var));
+	printf("A média populacional do conjunto de dados analisado é: %.2f\nA variância do conjunto de dados analisado é: %.2f\nO desvio padrão do conjunto de dados analisado é: %.2f\n",med,var,sqrtf(var));
 	printf("Caso o conjunto seja amostral, os resultados são os seguintes:\n");
-	printf("A média aritmética do conjunto de dados analisado é: %.2f\nA variância do conjunto de dados analisado é: %.2f\nO desvio padrão do conjunto de dados analisado é: %.2f\n",med2,var2,sqrtf(var2));
+	printf("A média amostral do conjunto de dados analisado é: %.2f\nA variância do conjunto de dados analisado é: %.2f\nO desvio padrão do conjunto de dados analisado é: %.2f\n",med,var2,sqrtf(var2));
 }
 void DF(float *vet,float *pes,int n){
 	int i;
@@ -346,4 +354,68 @@ void PM(float *vet,float ac,int n,int c){
 		freq2+=(freq[i]/freq1)*100;
 		printf("A frequência acumulada da %dª classe é de %.2f%%\n",i+1,freq2);
 	}
-};
+}
+void IDCC(int n){
+	float x,e,zc,dp,c,soma=0,n1;
+	float* vet;
+	int i,n2;
+	if(n==0)
+		printf("Esse programa analisará um conjunto de dados e retornará a sua quantidade de membros.\n");
+	if(n!=0){
+		printf("Esse programa analisará um conjunto de dados e retornará o intervalo de confiança do mesmo.\n");
+		vet = (float*)malloc(sizeof(int)*n);
+		for(i=0;i<n;i++){
+			printf("Digite o %dº dado: ",i+1);
+				scanf("%f",&vet[i]);
+		}
+	}
+	
+	printf("Qual o desvio padrão populacional desse conjunto de dados? ");
+	scanf("%f",&dp);
+	
+	do{
+		printf("Qual o nível de confiança para o intervalo desse conjunto de dados(90%%, 95%% ou 99%% - Digite sem a %%)? ");
+		scanf("%f",&c);
+		if(c<80.0 || c>99.9)
+			printf("<Valor de 'c' inválido, favor digitar um valor entre 80%% e 99.9%%>\n");
+	}while(c<80.0 || c>99.9);
+	if(c==80)
+		zc=1.28;
+	if(c==90)
+		zc=1.645;
+	if(c==95)
+		zc=1.96;
+	if(c==98)
+		zc=2.33;
+	if(c==99)
+		zc=2.58;
+	if(c==99.8)
+		zc=3.08;
+	if(c==99.9)
+		zc=3.27;
+	
+	if(n==0){
+		printf("Qual a margem de erro do conjunto de dados? ");
+		scanf("%f",&e);
+		n1=(zc*dp/e)*(zc*dp/e);
+		n2=ceilf(n1);
+		printf("O conjunto de dados em questão possui %d dados.\n",n2);
+	}
+	else
+		e=zc*dp/sqrtf(n);
+	
+	for(i=0;i<n;i++){
+		soma+=vet[i];
+	}
+	x=soma/n;
+	
+	if(n!=0)
+		printf("O intervalo de confiança desse conjunto de dados se encontra entre '%f' e %f', com uma média de '%f'.\n",x-e,x+e,x);
+	else
+		printf("A estimativa pontual da média populacional é de '%f'.\n",x);
+}
+void IDCD(){//à ser implementada no futuro.
+	printf("Função ainda em desenvolvimento.\n");
+	system("PAUSE");
+	system("CLS");
+}

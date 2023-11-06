@@ -7,7 +7,7 @@
 int main()
 {
 	float aiq,q1,q2,q3,tq,ol,or,ac;
-	int i,n,c,esc,esc2,esc3,esc4,esc5;
+	int i,n,c,esc,esc2,esc3,esc4,esc5,esc6;
 	float *v,*v2;
 	float *p,*p2;
 	
@@ -15,16 +15,16 @@ int main()
 	do{
 		system("CLS");
 		esc=menu();
+		
 		if(esc==1){
 			system("CLS");
 			printf("\nEsse programa analisará um conjunto de dados por meio dos Três Quartis.\n");
 			do{
 				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
-				if(n<0){
-					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-				}
-			}while(n<0);
+				if(n<=0)
+					printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+			}while(n<=0);
 			
 			v = (float*)malloc(sizeof(int)*n);
 			v2 = (float*)malloc(sizeof(int)*n);
@@ -51,16 +51,16 @@ int main()
 			system("PAUSE");
 			continue;
 		}
+		
 		if(esc==2){
 			system("CLS");
 			printf("\nEsse programa analisará um conjunto de dados e informará a média aritimética deles.\n");
 			do{
 				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
-				if(n<0){
-					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-				}
-			}while(n<0);
+				if(n<=0)
+					printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+			}while(n<=0);
 			
 			v = (float*)malloc(sizeof(int)*n);
 			
@@ -72,16 +72,16 @@ int main()
 			system("PAUSE");
 			continue;
 		}
+		
 		if(esc==3){
 			system("CLS");
 			printf("Esse programa analisará um conjunto de dados e informará a média ponderada deles.\n");
 			do{
 				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
-				if(n<0){
-					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-				}
-			}while(n<0);
+				if(n<=0)
+					printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+			}while(n<=0);
 	
 			v = (float*)malloc(sizeof(int)*n);
 			p = (float*)malloc(sizeof(int)*n);
@@ -96,6 +96,7 @@ int main()
 			system("PAUSE");
 			continue;
 		}
+		
 		if(esc==4){
 			system("CLS");
 			do{
@@ -110,8 +111,13 @@ int main()
 			}while(esc3<1 || esc3>2);
 			if(esc3==1){
 				printf("Esse programa analisará um conjunto de dados e buscará a amplitude de classes do mesmo.\n");
-				printf("Digite a quantidade de dados que serão analisados: ");
-				scanf("%d",&n);
+				do{
+					printf("Digite a quantidade de dados que serão analisados: ");
+					scanf("%d",&n);
+					if(n<=0)
+						printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+				}while(n<=0);
+				
 				do{
 					printf("Digite quantas classes deseja utilizar: ");
 					scanf("%d",&c);
@@ -121,9 +127,7 @@ int main()
 					}
 				}while(c > n);
 				
-				if(n<0){
-					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-				}
+				
 				
 				v = (float*)malloc(sizeof(int)*n);
 				v2 = (float*)malloc(sizeof(int)*n);
@@ -172,10 +176,9 @@ int main()
 				do{
 					printf("Digite a quantidade de classes que serão analisadas: ");
 					scanf("%d",&n);
-					if(n<0){
-						printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-					}
-				}while(n<0);
+					if(n<=0)
+						printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+				}while(n<=0);
 				
 				v = (float*)malloc(sizeof(int)*n);
 				p = (float*)malloc(sizeof(int)*n);
@@ -212,16 +215,16 @@ int main()
 			system("PAUSE");
 			continue;
 		}
+		
 		if(esc==5){
 			system("CLS");
 			printf("Esse programa analisará um conjunto de dados e informará a média, variância e desvio padrão deles.\n");
 			do{
 				printf("Digite a quantidade de dados a ser analisada: ");
 				scanf("%d",&n);
-				if(n<0){
-					printf("A quantidade digitada é inválida, por favor digite um valor maior que 0.\n");
-				}
-			}while(n<0);
+				if(n<=0)
+					printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+			}while(n<=0);
 			
 			v = (float*)malloc(sizeof(int)*n);
 			
@@ -233,15 +236,40 @@ int main()
 			system("PAUSE");
 			continue;
 		}
+		
 		if(esc==6){
+			system("CLS");
+			
+			do{
+				esc6 = menuIDC();
+				if(esc6==1){
+					do{
+						printf("Digite a quantidade de dados a ser analisada (caso não saiba, digite 0): ");
+						scanf("%d",&n);
+						if(n<0){
+							printf("<A quantidade digitada é inválida, por favor digite um valor maior ou igual a 0>\n");
+						}
+					}while(n<0);
+					system("CLS");
+					IDCC(n);
+				}
+				if(esc6==2)
+					IDCD();
+				if(esc6<1 || esc6>2)
+					printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
+			}while(esc6<1 || esc6>2);
+			system("PAUSE");
+		}
+		
+		if(esc==7){
 			printf("\t\t\t\tSaindo...\n");
 		}
-		if(esc<1 || esc>6){
-			printf("<Valor inválido, por favor digite um valor entre 1 e 6>\n");
+		if(esc<1 || esc>7){
+			printf("<Valor inválido, por favor digite um valor entre 1 e 7>\n");
 			system("PAUSE");
 			continue;
 		}
-	}while(esc!=6);
+	}while(esc!=7);
 	
 	system("PAUSE");
 	

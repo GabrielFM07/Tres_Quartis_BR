@@ -2,6 +2,8 @@ int menu();
 
 int menuDF();
 
+int menuIDC();
+
 float* ORDP(float *vetor,float *peso,int n);
 
 float* ORD(float *vetor, int tamanho);
@@ -31,3 +33,7 @@ void DF(float *vet,float *pes,int n);
 float AC(float *vet,int n,int cla);
 
 void PM(float *vet,float ac,int n,int c);
+
+void IDCC(int n);
+
+void IDCD();
