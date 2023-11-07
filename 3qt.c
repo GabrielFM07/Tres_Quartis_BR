@@ -419,7 +419,7 @@ void IDCC(int n){
 		scanf("%f",&e);
 		n1=(zc*dp/e)*(zc*dp/e);
 		n2=ceilf(n1);
-		printf("O conjunto de dados em questão possui %d dados.\n",n2);
+		printf("\nO conjunto de dados em questão possui %d dados.\n",n2);
 	}
 	else
 		e=zc*dp/sqrtf(n);
@@ -436,14 +436,14 @@ void IDCC(int n){
 	}
 	
 	if(n!=0 && esc2!=2){
-		printf("Sabendo que c é igual a '%.1f', z-crítico é igual a '%.3f' e o desvio padrão é igual a: '%f', temos que:\n",c,zc,dp);
+		printf("\nSabendo que c é igual a '%.1f', z-crítico é igual a '%.3f' e o desvio padrão é igual a: '%f', temos que:\n",c,zc,dp);
 		printf("O intervalo de confiança desse conjunto de dados se encontra entre '%f' e %f', com uma média de '%f'.\n",x-e,x+e,x);
 	}
-	if(n==0)
-		printf("A estimativa pontual da média populacional é de '%f'.\n",x);
+	/*if(n==0)
+		printf("A estimativa pontual da média populacional é de '%f'.\n",x);*/
 	
 	if(esc2==2)
-		printf("O erro amostral é: '%f'\n",e);
+		printf("\nO erro amostral é: '%f'\n",e);
 }
 void IDCD(){//à ser implementada no futuro.
 	printf("Função ainda em desenvolvimento.\n");

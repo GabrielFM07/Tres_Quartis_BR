@@ -2,13 +2,13 @@
 <Layout>
 	<Files>
 		<File Name="Tres_Quartis.c" Top="No" Tabpos="1" TopLine="222">
-			<Cursor Line="253" Column="20"/>
+			<Cursor Line="222" Column="7"/>
 		</File>
 		<File Name="3qt.h" Top="No" Tabpos="2" TopLine="1">
 			<Cursor Line="5" Column="13"/>
 		</File>
-		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="365">
-			<Cursor Line="405" Column="20"/>
+		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="398">
+			<Cursor Line="446" Column="13"/>
 		</File>
 	</Files>
 </Layout>
