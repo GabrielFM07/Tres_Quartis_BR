@@ -650,7 +650,7 @@ void IDCD(int n){
 			}
 			else{
 				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
-				printf("O valor da margem de erro é: '%f'",e);
+				printf("O valor da margem de erro é: '%f'\n",e);
 			}
 		}
 		if(esc1==2){
