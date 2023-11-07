@@ -446,14 +446,14 @@ void IDCC(int n){
 void IDCD(int n){
 	float tc,x,s,e,soma1=0,soma2=0;
 	float* vet;
-	int i,c,esc,gl=(n-1);
+	int i,c,esc1,esc2,gl=(n-1);
 	
 	printf("Esse programa analisará um conjunto de dados e retornará o intervalo de confiança e/ou o t-crítico do mesmo.\n");
 	
 	do{
 		printf("O que deseja?(1-Obter o Intervalo de Confiança / 2-Somente o valor do t-crítico): ");
-		scanf("%d",&esc);
-		if(esc==1){
+		scanf("%d",&esc1);
+		if(esc1==1){
 			do{
 				printf("Qual o nível de confiança para o intervalo desse conjunto de dados(ex: 90%%, 99%% etc - Digite sem a %%)? ");
 				scanf("%d",&c);
@@ -627,13 +627,33 @@ void IDCD(int n){
 					soma2+=((vet[i]-x)*(vet[i]-x));
 				s=sqrtf(soma2/gl);
 			}
-			
+			if(s<0 || s>0){
+				do{
+					printf("Você sabe o valor da média amostral? (1-Sim / 2-Não)");
+					scanf("%d",&esc2);
+					if(esc2==1){
+						printf("Digite o valor da média: ");
+						scanf("%f",&x);
+					}
+					if(esc2==2){
+						
+					}
+					if(esc2<1 || esc2>2)
+						printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
+				}while(esc2<1 || esc2>2);
+			}
 			e=(tc*s)/sqrtf(n);
 			
-			printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
-			printf("O intervalo de confiança desse conjunto de dados se encontra entre '%f' e %f', com uma média de '%f'.\n",x-e,x+e,x);
+			if(esc2==1 || s==0){
+				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
+				printf("O intervalo de confiança desse conjunto de dados se encontra entre '%f' e %f', com uma média de '%f'.\n",x-e,x+e,x);
+			}
+			else{
+				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
+				printf("O valor da margem de erro é: '%f'",e);
+			}
 		}
-		if(esc==2){
+		if(esc1==2){
 			do{
 				printf("Qual o nível de confiança para o intervalo desse conjunto de dados(ex: 90%%, 99%% etc - Digite sem a %%)? ");
 				scanf("%d",&c);
@@ -795,7 +815,7 @@ void IDCD(int n){
 			
 			printf("O valor do t-crítico é: '%.3f'\n",tc);
 			}
-		if(esc<1 || esc>2)
+		if(esc1<1 || esc1>2)
 				printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
-	}while(esc<1 || esc>2);
+	}while(esc1<1 || esc1>2);
 }
