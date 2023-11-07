@@ -655,7 +655,8 @@ void IDCD(int n){
 			}
 			
 			if(esc2==1 || s==0){
-				s=sqrtf(soma2/gl);
+				if(s==0)
+					s=sqrtf(soma2/gl);
 				e=(tc*s)/sqrtf(n);
 				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e a média amostral é igual a: '%f', temos que:\n",c,tc,x);
 				printf("O desvio padrão amostral é igual a: '%f'\nA margem de erro é: '%f' e o intervalo de confiança é: |'%f' < '%f' < '%f'|\n",s,e,x-e,x,x+e);
