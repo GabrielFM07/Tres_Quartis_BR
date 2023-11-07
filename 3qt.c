@@ -370,7 +370,13 @@ void IDCC(int n){
 				printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 		}while(esc1<1 || esc1>2);
 		if(esc1==2){
-			printf("O que deseja(1-Digitar os valores do conjunto / 2-Buscar o erro amostral)? ");
+			printf(" ________________________________________________________________________________\n");
+			printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+			printf("|                       1-<Digitar os valores do conjunto>                       |\n");
+			printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+			printf("|                           2-<Buscar o erro amostral>                           |\n");
+			printf("|________________________________________________________________________________|\n");
+			printf("\nO que deseja? ");
 			scanf("%d",&esc2);
 			if(esc2==1){
 				vet = (float*)malloc(sizeof(int)*n);
@@ -451,7 +457,13 @@ void IDCD(int n){
 	printf("Esse programa analisará um conjunto de dados e retornará o intervalo de confiança e/ou o t-crítico do mesmo.\n");
 	
 	do{
-		printf("O que deseja?(1-Obter o Intervalo de Confiança / 2-Somente o valor do t-crítico): ");
+		printf(" ________________________________________________________________________________\n");
+		printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+		printf("|                 1-<Intervalo de Confiança e/ou margem de erro>                 |\n");
+		printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+		printf("|                        2-<Somente o valor do t-crítico>                        |\n");
+		printf("|________________________________________________________________________________|\n");
+		printf("\nO que está buscando? ");
 		scanf("%d",&esc1);
 		if(esc1==1){
 			do{
@@ -629,7 +641,7 @@ void IDCD(int n){
 			}
 			if(s<0 || s>0){
 				do{
-					printf("Você sabe o valor da média amostral? (1-Sim / 2-Não)");
+					printf("Você sabe o valor da média amostral(1-Sim / 2-Não)? ");
 					scanf("%d",&esc2);
 					if(esc2==1){
 						printf("Digite o valor da média: ");

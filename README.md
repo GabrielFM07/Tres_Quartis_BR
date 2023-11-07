@@ -16,3 +16,4 @@ Changelog:
 3.0.5: Correção de alguns cálculos que permaneciam incorretos nas funções de desvio padrão e variância. Implementação de uma nova função (Intervalos de Confiança de conjuntos de dados com desvio padrão conhecido);
 3.0.75: Adição de algumas novas funcionalidades à função responsável pelo cálculo dos Intervalos de Confiança;
 3.1.0: Implementação de uma nova função (Intervalos de Confiança de conjuntos de dados com desvio padrão desconhecido);
+3.1.5: Pequenas melhorias visuais nas funções de Intervalos de Confiança (novos menus de escolha);
