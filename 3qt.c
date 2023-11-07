@@ -450,9 +450,9 @@ void IDCC(int n){
 		printf("\nO erro amostral é: '%f'\n",e);
 }
 void IDCD(int n){
-	float tc,x,s,e,soma1=0,soma2=0;
+	float tc,x,s,e,soma1=0,soma2=0,gl=(n-1);
 	float* vet;
-	int i,c,esc1,esc2,gl=(n-1);
+	int i,c,esc1,esc2;
 	
 	printf("Esse programa analisará um conjunto de dados e retornará o intervalo de confiança e/ou o t-crítico do mesmo.\n");
 	
@@ -637,7 +637,6 @@ void IDCD(int n){
 				x=soma1/n;
 				for(i=0;i<n;i++)
 					soma2+=((vet[i]-x)*(vet[i]-x));
-				s=sqrtf(soma2/gl);
 			}
 			if(s<0 || s>0){
 				do{
@@ -654,13 +653,15 @@ void IDCD(int n){
 						printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 				}while(esc2<1 || esc2>2);
 			}
-			e=(tc*s)/sqrtf(n);
 			
 			if(esc2==1 || s==0){
-				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
-				printf("A margem de erro é: '%f' e o intervalo de confiança é: |'%f' < '%f' < '%f'|\n",e,x-e,x,x+e);
+				s=sqrtf(soma2/gl);
+				e=(tc*s)/sqrtf(n);
+				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e a média amostral é igual a: '%f', temos que:\n",c,tc,x);
+				printf("O desvio padrão amostral é igual a: '%f'\nA margem de erro é: '%f' e o intervalo de confiança é: |'%f' < '%f' < '%f'|\n",s,e,x-e,x,x+e);
 			}
 			else{
+				e=(tc*s)/sqrtf(n);
 				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e o desvio padrão amostral é igual a: '%f', temos que:\n",c,tc,s);
 				printf("O valor da margem de erro é: '%f'\n",e);
 			}
