@@ -7,8 +7,8 @@
 		<File Name="3qt.h" Top="No" Tabpos="2" TopLine="1">
 			<Cursor Line="5" Column="13"/>
 		</File>
-		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="398">
-			<Cursor Line="446" Column="13"/>
+		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="365">
+			<Cursor Line="389" Column="99"/>
 		</File>
 	</Files>
 </Layout>

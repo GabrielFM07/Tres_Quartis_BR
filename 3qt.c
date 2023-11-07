@@ -386,7 +386,7 @@ void IDCC(int n){
 	scanf("%f",&dp);
 	
 	do{
-		printf("Qual o nível de confiança para o intervalo desse conjunto de dados(90%%, 95%% ou 99%% - Digite sem a %%)? ");
+		printf("Qual o nível de confiança para o intervalo desse conjunto de dados(ex: 80%%, 99%% etc - Digite sem a %%)? ");
 		scanf("%f",&c);
 		if(c<75.0 || c>99.9)
 			printf("<Valor de 'c' inválido, favor digitar um valor entre 75%% e 99.9%%>\n");
