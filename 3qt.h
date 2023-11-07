@@ -36,4 +36,4 @@ void PM(float *vet,float ac,int n,int c);
 
 void IDCC(int n);
 
-void IDCD();
+void IDCD(int n);

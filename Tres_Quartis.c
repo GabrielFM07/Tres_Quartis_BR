@@ -253,8 +253,18 @@ int main()
 					system("CLS");
 					IDCC(n);
 				}
-				if(esc6==2)
-					IDCD();
+				if(esc6==2){
+					do{
+						printf("Digite a quantidade de dados a ser analisada: ");
+						scanf("%d",&n);
+						if(n<=0){
+							printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+						}
+					}while(n<=0);
+					system("CLS");
+					IDCD(n);
+				}
+					
 				if(esc6<1 || esc6>2)
 					printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 			}while(esc6<1 || esc6>2);
