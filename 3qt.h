@@ -37,3 +37,5 @@ void PM(float *vet,float ac,int n,int c);
 void IDCC(int n);
 
 void IDCD(int n);
+
+void PPR(int n);

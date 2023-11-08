@@ -43,6 +43,8 @@ int menuIDC(){
 	printf("|             1-<Intervalo de confiança com desvio padrão conhecido>             |\n");
 	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
 	printf("|           2-<Intervalo de Confiança com desvio padrão desconhecido>            |\n");
+	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+	printf("|                                 3-<Proporção>                                  |\n");
 	printf("|________________________________________________________________________________|\n");
 	printf("\nO que deseja calcular? ");
 	scanf("%d",&esc);
@@ -539,6 +541,8 @@ void IDCD(int n){
 					tc=2.101;
 				if(gl==19)
 					tc=2.093;
+				if(gl==32)
+					tc=2.037;
 				if(gl==34)
 					tc=2.032;
 				if(gl==39)
@@ -658,7 +662,7 @@ void IDCD(int n){
 				if(s==0)
 					s=sqrtf(soma2/gl);
 				e=(tc*s)/sqrtf(n);
-				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e a média amostral é igual a: '%f', temos que:\n",c,tc,x);
+				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e a estimativa pontual é igual a: '%f', temos que:\n",c,tc,x);
 				printf("O desvio padrão amostral é igual a: '%f'\nA margem de erro é: '%f' e o intervalo de confiança é: |'%f' < u < '%f'|\n",s,e,x-e,x+e);
 			}
 			else{
@@ -741,6 +745,8 @@ void IDCD(int n){
 					tc=2.101;
 				if(gl==19)
 					tc=2.093;
+				if(gl==32)
+					tc=2.037;
 				if(gl==34)
 					tc=2.032;
 				if(gl==39)
@@ -832,4 +838,93 @@ void IDCD(int n){
 		if(esc1<1 || esc1>2)
 				printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
 	}while(esc1<1 || esc1>2);
+}
+void PPR(int n){
+	float x,p,q,c,zc,e;
+	
+	if(n==0){
+		printf("Esse programa informará a quantidade de um conjunto de dados por meio de seus dados proporcionais.\n\n");
+		
+		
+		printf("Informe o valor de 'p^' desse conjunto de dados: ");
+		scanf("%f",&p);
+		printf("Informe o valor de 'q^' desse conjunto de dados: ");
+		scanf("%f",&q);
+		printf("Informe a margem de erro desse conjunto de dados: ");
+		scanf("%f",&e);
+		do{
+			printf("Informe o valor de 'c' desse conjunto de dados: ");
+			scanf("%f",&c);
+			if(c<75.0 || c>99.9)
+				printf("<Valor de 'c' inválido, favor digitar um valor entre 75%% e 99.9%%>\n");
+		}while(c<75.0 || c>99.9);
+		if(c==75)
+			zc=1.15;
+		if(c==80)
+			zc=1.28;
+		if(c==85)
+			zc=1.44;
+		if(c==90)
+			zc=1.645;
+		if(c==95)
+			zc=1.96;
+		if(c==97)
+			zc=2.17;
+		if(c==97.5)
+			zc=2.242;
+		if(c==98)
+			zc=2.33;
+		if(c==99)
+			zc=2.58;
+		if(c==99.8)
+			zc=3.08;
+		if(c==99.9)
+			zc=3.27;
+		
+		n = p*q*((zc/e)*(zc/e));
+		
+		printf("A quantidade mínima de dados desse conjunto é: '%d'\n",n);
+	}
+	if(n!=0){
+		printf("Esse programa informará a proporção de um subconjunto de dados em relação ao seu conjunto total de dados.\n\n");
+		
+		printf("Informe a quantidade de dados do subconjunto(x): ");
+		scanf("%f",&x);
+		
+		do{
+			printf("Informe a confiança que deseja para o intervalo de confiança: ");
+			scanf("%f",&c);
+			if(c<75.0 || c>99.9)
+				printf("<Valor de 'c' inválido, favor digitar um valor entre 75%% e 99.9%%>\n");
+		}while(c<75.0 || c>99.9);
+		if(c==75)
+			zc=1.15;
+		if(c==80)
+			zc=1.28;
+		if(c==85)
+			zc=1.44;
+		if(c==90)
+			zc=1.645;
+		if(c==95)
+			zc=1.96;
+		if(c==97)
+			zc=2.17;
+		if(c==97.5)
+			zc=2.242;
+		if(c==98)
+			zc=2.33;
+		if(c==99)
+			zc=2.58;
+		if(c==99.8)
+			zc=3.08;
+		if(c==99.9)
+			zc=3.27;
+		
+		p = x/n;
+		q = 1.0-p;
+		e = (zc*sqrtf(p*q))/n;
+		
+		printf("Sabendo que a quantidade (n) de dados do conjunto é '%d', a quantidade de dados (x) do subconjunto é '%.0f', temos que:\n",n,x);
+		printf("A margem de erro é '%f' e o intervalo de confiança é de: | '%f' < u < '%f' |\n",e,p-e,p+e);
+	}
 }

@@ -264,10 +264,20 @@ int main()
 					system("CLS");
 					IDCD(n);
 				}
-					
-				if(esc6<1 || esc6>2)
-					printf("<Valor inválido, por favor digite um valor entre 1 e 2>\n");
-			}while(esc6<1 || esc6>2);
+				if(esc6==3){
+					do{
+						printf("Digite a quantidade de dados a ser analisada (caso não saiba, digite 0): ");
+						scanf("%d",&n);
+						if(n<0){
+							printf("<A quantidade digitada é inválida, por favor digite um valor maior ou igual a 0>\n");
+						}
+					}while(n<0);
+					system("CLS");
+					PPR(n);
+				}
+				if(esc6<1 || esc6>3)
+					printf("<Valor inválido, por favor digite um valor entre 1 e 3>\n");
+			}while(esc6<1 || esc6>3);
 			system("PAUSE");
 		}
 		
