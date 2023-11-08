@@ -443,7 +443,7 @@ void IDCC(int n){
 	
 	if(n!=0 && esc2!=2){
 		printf("\nSabendo que c é igual a '%.1f%%', z-crítico é igual a '%.3f' e o desvio padrão é igual a: '%f', temos que:\n",c,zc,dp);
-		printf("A margem de erro é: '%f' e o intervalo de confiança é: |'%f' < '%f' < '%f'|\n",e,x-e,x,x+e);
+		printf("A margem de erro é: '%f' e o intervalo de confiança é: |'%f' < u < '%f'|\n",e,x-e,x+e);
 	}
 	
 	if(esc2==2)
@@ -659,7 +659,7 @@ void IDCD(int n){
 					s=sqrtf(soma2/gl);
 				e=(tc*s)/sqrtf(n);
 				printf("\nSabendo que c é igual a '%d%%', t-crítico é igual a '%.3f' e a média amostral é igual a: '%f', temos que:\n",c,tc,x);
-				printf("O desvio padrão amostral é igual a: '%f'\nA margem de erro é: '%f' e o intervalo de confiança é: |'%f' < '%f' < '%f'|\n",s,e,x-e,x,x+e);
+				printf("O desvio padrão amostral é igual a: '%f'\nA margem de erro é: '%f' e o intervalo de confiança é: |'%f' < u < '%f'|\n",s,e,x-e,x+e);
 			}
 			else{
 				e=(tc*s)/sqrtf(n);
