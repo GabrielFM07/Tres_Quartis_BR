@@ -19,3 +19,4 @@ Changelog:
 3.1.5: Pequenas melhorias visuais nas funções de Intervalos de Confiança (novos menus de escolha);
 3.2.0: Implementação de uma nova função (Intervalos de Confiança para Proporção);
 3.2.5: Mais melhorias visuais nas funções de Intervalos de Confiança. Mais funcionalidades adicionadas à função de Proporção;
+3.3.0: Implementação de uma nova função (Intervalos de Confiança para Variancia e Desvio Padrão);

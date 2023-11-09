@@ -39,3 +39,5 @@ void IDCC(int n);
 void IDCD(int n);
 
 void PPR(int n);
+
+void QUIQ(int n);

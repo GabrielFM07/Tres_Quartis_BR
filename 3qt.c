@@ -44,7 +44,7 @@ int menuIDC(){
 	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
 	printf("|           2-<Intervalo de Confiança com desvio padrão desconhecido>            |\n");
 	printf("|\t\t\t\t\t\t\t\t\t\t |\n");
-	printf("|                                 3-<Proporção>                                  |\n");
+	printf("|                3-<Proporção>                   4-<Qui-Quadrado>                |\n");
 	printf("|________________________________________________________________________________|\n");
 	printf("\nO que deseja calcular? ");
 	scanf("%d",&esc);
@@ -900,7 +900,7 @@ void PPR(int n){
 				printf("Qual a probabilidade relacionada à 'n' (digite sem a %%)? ");
 				scanf("%f",&p1);
 				if(p1<0 || p1>100)
-					printf("<Valor de 'c' inválido, favor digitar um valor entre 0%% e 100%%>\n");
+					printf("<Valor de inválido, favor digitar um valor entre 0%% e 100%%>\n");
 			}while(p1<0 || p1>100);
 			p2 = p1/100.0;
 			x1 = n*p2;
@@ -940,7 +940,595 @@ void PPR(int n){
 		e = (zc*sqrtf(p*q))/n;
 		
 		printf("Sabendo que:\nA quantidade (n) de dados do conjunto é '%d'\nA quantidade de dados (x) do subconjunto é '%.0f'\n",n,x);
-		printf("& com um nível de confiança de '%.2f%%', temos que:\n",c);
+		printf("& o nível de confiança é de '%.2f%%', temos que:\n",c);
 		printf("A margem de erro é '%f' e o intervalo de confiança é de: | '%f' < u < '%f' |\n",e,p-e,p+e);
+	}
+}
+void QUIQ(int n){
+	float s,c,c2,soma1,soma2,xr,x,xl,xr2=0,xl2=0,ivl,ivr,idl,idr;
+	float* vet;
+	int i,esc,gl=(n-1);
+	
+	do{
+		printf(" ________________________________________________________________________________\n");
+		printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+		printf("|                           1-<Intervalo de Confiança>                           |\n");
+		printf("|\t\t\t\t\t\t\t\t\t\t |\n");
+		printf("|                         2-<Somente o valor do Xr e Xl>                         |\n");
+		printf("|________________________________________________________________________________|\n");
+		printf("\nO que está buscando? ");
+		scanf("%d",&esc);
+		if(c<0 || c>1)
+		  	printf("<Valor inválido, favor digitar um valor entre 1 e 2>\n");
+	}while(esc<1 || esc>2);
+	system("CLS");
+	
+	if(esc==1){
+		printf("Esse programa informará o intervalo de confiança da variância e do desvio padrão de um conjunto de dados.\n\n");
+		
+		printf("Qual o valor do desvio padrão amostral(Caso não saiba, digite 0)? ");
+		scanf("%f",&s);
+		if(s==0){
+			vet = (float*)malloc(sizeof(int)*n);
+			for(i=0;i<n;i++){
+				printf("Digite o %dº dado: ",i+1);
+				scanf("%f",&vet[i]);
+				soma1+=vet[i];
+			}
+			x=soma1/n;
+			for(i=0;i<n;i++)
+				soma2+=((vet[i]-x)*(vet[i]-x));
+			s=sqrtf(soma2/gl);
+		}
+		
+		do{
+			printf("Qual o valor de confiança que deseja utilizar? ");
+			scanf("%f",&c);
+			if(c<0 || c>100)
+		  		printf("<Valor de 'c' inválido, favor digitar um valor entre 0%% e 100%%>\n");
+		}while(c<0 || c>100);
+		c2 = c/100;
+		xr = (1.0-c2)/2.0;
+		xl = (1.0+c2)/2.0;
+		printf("xr : %f\nxl: %f\n",xr,xl);
+		if(xr>=0.004 && xr<=0.006){
+			if(gl==6)
+				xr2=18.548;
+			if(gl==7)
+				xr2=20.278;
+			if(gl==13)
+				xr2=29.819;
+			if(gl==14)
+				xr2=31.319;
+			if(gl==17)
+				xr2=35.718;
+			if(gl==29)
+				xr2=52.336;
+		}
+		if(xr>=0.009 && xr<=0.11){
+			if(gl==25)
+				xr2=44.314;
+			if(gl==40)
+				xr2=63.619;
+		}
+		if(xr>=0.024 && xr<=0.026){
+			if(gl==7)
+				xr2=16.013;
+			if(gl==14)
+				xr2=26.119;
+			if(gl==16)
+				xr2=28.845;
+			if(gl==18)
+				xr2=31.526;
+			if(gl==19)
+				xr2=32.852;
+			if(gl==29)
+				xr2=45.722;
+		}
+		if(xr>=0.049 && xr<=0.051){
+			if(gl==7)
+				xr2=14.067;
+			if(gl==14)
+				xr2=23.685;
+			if(gl==17)
+				xr2=27.587;
+		}
+		if(xr>=0.09 && xr<=0.11){
+			if(gl==50)
+				xr2=76.154;
+			if(gl==10)
+				xr2=15.987;
+		}
+		if(xr>=0.79 && xr<=0.81){
+			if(gl==50)
+				xr2=41.449;
+			if(gl==10)
+				xr2=6.179;
+		}
+		if(xr>=0.89 && xr<=0.91){
+			if(gl==7)
+				xr2=2.833;
+			if(gl==10)
+				xr2=4.865;
+			if(gl==14)
+				xr2=7.790;
+			if(gl==17)
+				xr2=10.085;
+			if(gl==50)
+				xr2=37.689;
+		}
+		if(xr>=0.949 && xr<=0.951){
+			if(gl==7)
+				xr2=2.167;
+			if(gl==14)
+				xr2=6.571;
+			if(gl==16)
+				xr2=7.961;
+			if(gl==17)
+				xr2=8.672;
+			if(gl==18)
+				xr2=9.390;
+			if(gl==19)
+				xr2=10.117;
+			if(gl==29)
+				xr2=17.708;
+		}
+		if(xr>=0.974 && xr<=0.976){
+			if(gl==14)
+				xr2=5.629;
+			if(gl==16)
+				xr2=6.908;
+			if(gl==18)
+				xr2=8.231;
+			if(gl==19)
+				xr2=8.907;
+			if(gl==29)
+				xr2=16.047;
+		}
+		if(xr>=0.979 && xr<=0.981){
+			if(gl==25)
+				xr2=12.697;
+			if(gl==40)
+				xr2=23.838;
+		}
+		if(xr>=0.989 && xr<=0.991){
+			if(gl==6)
+				xr2=0.872;
+			if(gl==13)
+				xr2=4.107;
+			if(gl==14)
+				xr2=4.660;
+			if(gl==17)
+				xr2=6.408;
+			if(gl==25)
+				xr2=11.524;
+			if(gl==29)
+				xr2=14.256;
+			if(gl==40)
+				xr2=22.164;
+		}
+		if(xr>=0.994 && xr<=0.996){
+			if(gl==6)
+				xr2=0.676;
+			if(gl==13)
+				xr2=3.565;
+			if(gl==14)
+				xr2=4.075;
+			if(gl==17)
+				xr2=5.697;
+			if(gl==29)
+				xr2=13.121;
+		}
+		if(xl>=0.004 && xl<=0.006){
+			if(gl==6)
+				xl2=18.548;
+			if(gl==7)
+				xl2=20.278;
+			if(gl==13)
+				xl2=29.819;
+			if(gl==14)
+				xl2=31.319;
+			if(gl==17)
+				xl2=35.718;
+			if(gl==29)
+				xl2=52.336;
+		}
+		if(xl>=0.009 && xl<=0.011){
+			if(gl==25)
+				xl2=44.314;
+			if(gl==40)
+				xl2=63.619;
+		}
+		if(xl>=0.024 && xl<=0.026){
+			if(gl==7)
+				xl2=16.013;
+			if(gl==14)
+				xl2=26.119;
+			if(gl==16)
+				xl2=28.845;
+			if(gl==18)
+				xl2=31.526;
+			if(gl==19)
+				xl2=32.852;
+			if(gl==29)
+				xl2=45.722;
+		}
+		if(xl>=0.049 && xl<=0.51){
+			if(gl==7)
+				xl2=14.067;
+			if(gl==14)
+				xl2=23.685;
+			if(gl==17)
+				xl2=27.587;
+		}
+		if(xl>=0.09 && xl<=0.11){
+			if(gl==50)
+				xl2=76.154;
+			if(gl==10)
+				xl2=23.209;
+		}
+		if(xl>=0.79 && xl<=0.81){
+			if(gl==50)
+				xl2=41.449;
+			if(gl==10)
+				xl2=6.179;
+		}
+		if(xl>=0.89 && xl<=0.91){
+			if(gl==7)
+				xl2=2.833;
+			if(gl==10)
+				xl2=4.865;
+			if(gl==14)
+				xl2=7.790;
+			if(gl==17)
+				xl2=10.085;
+			if(gl==50)
+				xl2=37.689;
+		}
+		if(xl>=0.949 && xl<=0.951){
+			if(gl==7)
+				xl2=2.167;
+			if(gl==14)
+				xl2=6.571;
+			if(gl==16)
+				xl2=7.961;
+			if(gl==17)
+				xl2=8.672;
+			if(gl==18)
+				xl2=9.390;
+			if(gl==19)
+				xl2=10.117;
+			if(gl==29)
+				xl2=17.708;
+		}
+		if(xl>=0.974 && xl<=0.976){
+			if(gl==14)
+				xl2=5.629;
+			if(gl==16)
+				xl2=6.908;
+			if(gl==18)
+				xl2=8.231;
+			if(gl==19)
+				xl2=8.907;
+			if(gl==29)
+				xl2=16.047;
+		}
+		if(xl>=0.979 && xl<=0.981){
+			if(gl==25)
+				xl2=12.697;
+			if(gl==40)
+				xl2=23.838;
+		}
+		if(xl>=0.989 && xl<=0.991){
+			if(gl==6)
+				xl2=0.872;
+			if(gl==13)
+				xl2=4.107;
+			if(gl==14)
+				xl2=4.660;
+			if(gl==17)
+				xl2=6.408;
+			if(gl==25)
+				xl2=11.524;
+			if(gl==29)
+				xl2=14.256;
+			if(gl==40)
+				xl2=22.164;
+		}
+		if(xl>=0.994 && xl<=0.996){
+			if(gl==6)
+				xl2=0.676;
+			if(gl==13)
+				xl2=3.565;
+			if(gl==14)
+				xl2=4.075;
+			if(gl==17)
+				xl2=5.697;
+			if(gl==29)
+				xl2=13.121;
+		}
+		
+		ivl = (gl*(s*s))/xr2;
+		ivr = (gl*(s*s))/xl2;
+		idl = sqrtf((gl*(s*s))/xr2);
+		idr = sqrtf((gl*(s*s))/xl2);
+		
+		printf("Sabendo que:\nA quantidade (n) de dados do conjunto é '%d'\nO desvio amostral (s) do conjunto é '%f'\n",n,s);
+		printf("& o nível de confiança é de '%.2f%%', temos que:\n",c);
+		printf("O intervalo de confiança da variância é: | '%f' < u < '%f' |\n",ivl,ivr);
+		printf("O intervalo de confiança do desvio padrão é: | '%f' < u < '%f' |\n",idl,idr);
+	}
+	if(esc==2){
+		printf("Esse programa informará o valor do Xr e Xl.\n\n");
+		
+		do{
+			printf("Qual o valor de confiança que deseja utilizar? ");
+			scanf("%f",&c);
+			if(c<0 || c>100)
+			  		printf("<Valor de 'c' inválido, favor digitar um valor entre 0%% e 100%%>\n");
+		}while(c<0 || c>100);
+		c2 = c/100.0;
+		xr = (1.0-c2)/2.0;
+		xl = (1.0+c2)/2.0;
+		//printf("xr : %f\nxl: %f\n",xr,xl);
+		if(xr>=0.004 && xr<=0.006){
+			if(gl==6)
+				xr2=18.548;
+			if(gl==7)
+				xr2=20.278;
+			if(gl==13)
+				xr2=29.819;
+			if(gl==14)
+				xr2=31.319;
+			if(gl==17)
+				xr2=35.718;
+			if(gl==29)
+				xr2=52.336;
+		}
+		if(xr>=0.009 && xr<=0.11){
+			if(gl==25)
+				xr2=44.314;
+			if(gl==40)
+				xr2=63.619;
+		}
+		if(xr>=0.024 && xr<=0.026){
+			if(gl==7)
+				xr2=16.013;
+			if(gl==14)
+				xr2=26.119;
+			if(gl==16)
+				xr2=28.845;
+			if(gl==18)
+				xr2=31.526;
+			if(gl==19)
+				xr2=32.852;
+			if(gl==29)
+				xr2=45.722;
+		}
+		if(xr>=0.049 && xr<=0.051){
+			if(gl==7)
+				xr2=14.067;
+			if(gl==14)
+				xr2=23.685;
+			if(gl==17)
+				xr2=27.587;
+		}
+		if(xr>=0.09 && xr<=0.11){
+			if(gl==50)
+				xr2=76.154;
+			if(gl==10)
+				xr2=15.987;
+		}
+		if(xr>=0.79 && xr<=0.81){
+			if(gl==50)
+				xr2=41.449;
+			if(gl==10)
+				xr2=6.179;
+		}
+		if(xr>=0.89 && xr<=0.91){
+			if(gl==7)
+				xr2=2.833;
+			if(gl==10)
+				xr2=4.865;
+			if(gl==14)
+				xr2=7.790;
+			if(gl==17)
+				xr2=10.085;
+			if(gl==50)
+				xr2=37.689;
+		}
+		if(xr>=0.949 && xr<=0.951){
+			if(gl==7)
+				xr2=2.167;
+			if(gl==14)
+				xr2=6.571;
+			if(gl==16)
+				xr2=7.961;
+			if(gl==17)
+				xr2=8.672;
+			if(gl==18)
+				xr2=9.390;
+			if(gl==19)
+				xr2=10.117;
+			if(gl==29)
+				xr2=17.708;
+		}
+		if(xr>=0.974 && xr<=0.976){
+			if(gl==14)
+				xr2=5.629;
+			if(gl==16)
+				xr2=6.908;
+			if(gl==18)
+				xr2=8.231;
+			if(gl==19)
+				xr2=8.907;
+			if(gl==29)
+				xr2=16.047;
+		}
+		if(xr>=0.979 && xr<=0.981){
+			if(gl==25)
+				xr2=12.697;
+			if(gl==40)
+				xr2=23.838;
+		}
+		if(xr>=0.989 && xr<=0.991){
+			if(gl==6)
+				xr2=0.872;
+			if(gl==13)
+				xr2=4.107;
+			if(gl==14)
+				xr2=4.660;
+			if(gl==17)
+				xr2=6.408;
+			if(gl==25)
+				xr2=11.524;
+			if(gl==29)
+				xr2=14.256;
+			if(gl==40)
+				xr2=22.164;
+		}
+		if(xr>=0.994 && xr<=0.996){
+			if(gl==6)
+				xr2=0.676;
+			if(gl==13)
+				xr2=3.565;
+			if(gl==14)
+				xr2=4.075;
+			if(gl==17)
+				xr2=5.697;
+			if(gl==29)
+				xr2=13.121;
+		}
+		if(xl>=0.004 && xl<=0.006){
+			if(gl==6)
+				xl2=18.548;
+			if(gl==7)
+				xl2=20.278;
+			if(gl==13)
+				xl2=29.819;
+			if(gl==14)
+				xl2=31.319;
+			if(gl==17)
+				xl2=35.718;
+			if(gl==29)
+				xl2=52.336;
+		}
+		if(xl>=0.009 && xl<=0.011){
+			if(gl==25)
+				xl2=44.314;
+			if(gl==40)
+				xl2=63.619;
+		}
+		if(xl>=0.024 && xl<=0.026){
+			if(gl==7)
+				xl2=16.013;
+			if(gl==14)
+				xl2=26.119;
+			if(gl==16)
+				xl2=28.845;
+			if(gl==18)
+				xl2=31.526;
+			if(gl==19)
+				xl2=32.852;
+			if(gl==29)
+				xl2=45.722;
+		}
+		if(xl>=0.049 && xl<=0.51){
+			if(gl==7)
+				xl2=14.067;
+			if(gl==14)
+				xl2=23.685;
+			if(gl==17)
+				xl2=27.587;
+		}
+		if(xl>=0.09 && xl<=0.11){
+			if(gl==50)
+				xl2=76.154;
+			if(gl==10)
+				xl2=23.209;
+		}
+		if(xl>=0.79 && xl<=0.81){
+			if(gl==50)
+				xl2=41.449;
+			if(gl==10)
+				xl2=6.179;
+		}
+		if(xl>=0.89 && xl<=0.91){
+			if(gl==7)
+				xl2=2.833;
+			if(gl==10)
+				xl2=4.865;
+			if(gl==14)
+				xl2=7.790;
+			if(gl==17)
+				xl2=10.085;
+			if(gl==50)
+				xl2=37.689;
+		}
+		if(xl>=0.949 && xl<=0.951){
+			if(gl==7)
+				xl2=2.167;
+			if(gl==14)
+				xl2=6.571;
+			if(gl==16)
+				xl2=7.961;
+			if(gl==17)
+				xl2=8.672;
+			if(gl==18)
+				xl2=9.390;
+			if(gl==19)
+				xl2=10.117;
+			if(gl==29)
+				xl2=17.708;
+		}
+		if(xl>=0.974 && xl<=0.976){
+			if(gl==14)
+				xl2=5.629;
+			if(gl==16)
+				xl2=6.908;
+			if(gl==18)
+				xl2=8.231;
+			if(gl==19)
+				xl2=8.907;
+			if(gl==29)
+				xl2=16.047;
+		}
+		if(xl>=0.979 && xl<=0.981){
+			if(gl==25)
+				xl2=12.697;
+			if(gl==40)
+				xl2=23.838;
+		}
+		if(xl>=0.989 && xl<=0.991){
+			if(gl==6)
+				xl2=0.872;
+			if(gl==13)
+				xl2=4.107;
+			if(gl==14)
+				xl2=4.660;
+			if(gl==17)
+				xl2=6.408;
+			if(gl==25)
+				xl2=11.524;
+			if(gl==29)
+				xl2=14.256;
+			if(gl==40)
+				xl2=22.164;
+		}
+		if(xl>=0.994 && xl<=0.996){
+			if(gl==6)
+				xl2=0.676;
+			if(gl==13)
+				xl2=3.565;
+			if(gl==14)
+				xl2=4.075;
+			if(gl==17)
+				xl2=5.697;
+			if(gl==29)
+				xl2=13.121;
+		}
+		
+		printf("Sabendo que:\nA quantidade (n) de dados do conjunto é '%d'\n& o nível de confiança é de '%.2f%%', temos que:\n",n,c);
+		printf("O valor de Xr é '%.3f'\nO valor do Xl é '%.3f'\n",xl2,xr2);
 	}
 }

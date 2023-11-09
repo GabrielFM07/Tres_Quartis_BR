@@ -275,9 +275,20 @@ int main()
 					system("CLS");
 					PPR(n);
 				}
-				if(esc6<1 || esc6>3)
+				if(esc6==4){
+					do{
+						printf("Digite a quantidade de dados a ser analisada: ");
+						scanf("%d",&n);
+						if(n<=0){
+							printf("<A quantidade digitada é inválida, por favor digite um valor maior que 0>\n");
+						}
+					}while(n<=0);
+					system("CLS");
+					QUIQ(n);
+				}
+				if(esc6<1 || esc6>4)
 					printf("<Valor inválido, por favor digite um valor entre 1 e 3>\n");
-			}while(esc6<1 || esc6>3);
+			}while(esc6<1 || esc6>4);
 			system("PAUSE");
 		}
 		

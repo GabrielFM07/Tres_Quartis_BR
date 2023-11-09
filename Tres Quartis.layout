@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout>
 	<Files>
-		<File Name="Tres_Quartis.c" Top="No" Tabpos="1" TopLine="229">
-			<Cursor Line="244" Column="22"/>
+		<File Name="Tres_Quartis.c" Top="No" Tabpos="1" TopLine="243">
+			<Cursor Line="287" Column="14"/>
 		</File>
 		<File Name="3qt.h" Top="No" Tabpos="2" TopLine="1">
-			<Cursor Line="41" Column="17"/>
+			<Cursor Line="43" Column="18"/>
 		</File>
-		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="834">
-			<Cursor Line="843" Column="35"/>
+		<File Name="3qt.c" Top="Yes" Tabpos="3" TopLine="967">
+			<Cursor Line="1273" Column="5"/>
 		</File>
 	</Files>
 </Layout>
